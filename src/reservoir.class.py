@@ -1,5 +1,6 @@
 import socket
 import json
+import os
 from ConfigParser import SafeConfigParser
 
 class Client:
@@ -20,7 +21,7 @@ class Client:
         self.protocol=config.get('client', 'protocol'),
         
         # set the protocol to follow
-        self.protocol = configs.get('protocol', 'TCP') # defaults to reliable one - TCP
+        self.protocol = config.get('protocol', 'TCP') # defaults to reliable one - TCP
         if self.protocol not in ['TCP', 'UDP']:
             self.protocol = 'TCP' 
 
