@@ -87,21 +87,27 @@ class ReservoirClient:
 
         data_string = json.dumps(batch)
         data = "GET %s" % (data_string,)
-        return self.send(data)
+        result = self.send(data)
+        result_json = json.loads(result)
+        return result_json
 
     def get_bucket(self, bucket):
         batch = [{
             'bucket': bucket
         }]
         data = "BKT %s" % (data_string,)
-        return self.send(data)
+        result = self.send(data)
+        result_json = json.loads(result)
+        return result_json
 
     def delete(self, key):
         batch = [{
             'key': key
         }]
         data = "DEL %s" % (data_string,)
-        return self.send(data)
+        result = self.send(data)
+        result_json = json.loads(result)
+        return result_json[0].get("data", None)
 
     def delete_batch(self, keys):
         batch = []
@@ -113,7 +119,9 @@ class ReservoirClient:
 
         data_string = json.dumps(batch)
         data = "DEL %s" % (data_string,)
-        return self.send(data)
+        result = self.send(data)
+        result_json = json.loads(result)
+        return result_json
 
     def icr(self, key, expiry=0):
         # send expiry=0 for already existing key for ICR
@@ -124,7 +132,9 @@ class ReservoirClient:
         }]
         data_string = json.dumps(batch)
         data = "ICR %s" % (data_string,)
-        return self.send(data)
+        result = self.send(data)
+        result_json = json.loads(result)
+        return result_json[0].get("data", None)
 
     def icr_batch(self, keys):
         batch = []
@@ -136,7 +146,9 @@ class ReservoirClient:
 
         data_string = json.dumps(batch)
         data = "ICR %s" % (data_string,)
-        return self.send(data)
+        result = self.send(data)
+        result_json = json.loads(result)
+        return result_json
 
     def dcr(self, key, expiry=0):
         # send expiry=0 for already existing key for DCR
@@ -146,7 +158,9 @@ class ReservoirClient:
         }]
         data_string = json.dumps(batch)
         data = "DCR %s" % (data_string,)
-        return self.send(data)
+        result = self.send(data)
+        result_json = json.loads(result)
+        return result_json[0].get("data", None)
 
     def dcr_batch(self, keys):
         batch = []
@@ -158,7 +172,9 @@ class ReservoirClient:
 
         data_string = json.dumps(batch)
         data = "DCR %s" % (data_string,)
-        return self.send(data)
+        result = self.send(data)
+        result_json = json.loads(result)
+        return result_json
 
     def tmr(self, key):
         batch = [{
@@ -166,7 +182,9 @@ class ReservoirClient:
         }]
         data_string = json.dumps(batch)
         data = "TMR %s" % (data_string,)
-        return self.send(data)
+        result = self.send(data)
+        result_json = json.loads(result)
+        return result_json[0].get("data", None)
 
 
     def ota(self, key, value, expiry):
@@ -177,7 +195,9 @@ class ReservoirClient:
         }]
         data_string = json.dumps(batch)
         data = "OTA %s" % (data_string,)
-        return self.send(data)
+        result = self.send(data)
+        result_json = json.loads(result)
+        return result_json[0].get("data", None)
 
     def ota_batch(self, items):
         batch = []
@@ -193,7 +213,9 @@ class ReservoirClient:
 
         data_string = json.dumps(batch)
         data = "OTA %s" % (data_string,)
-        return self.send(data)
+        result = self.send(data)
+        result_json = json.loads(result)
+        return result_json
 
     def tpl(self, key, value, expiry):
         batch = [{
@@ -203,7 +225,9 @@ class ReservoirClient:
         }]
         data_string = json.dumps(batch)
         data = "TPL %s" % (data_string,)
-        return self.send(data)
+        result = self.send(data)
+        result_json = json.loads(result)
+        return result_json[0].get("data", None)
 
     def tpl_batch(self, items):
         batch = []
@@ -219,7 +243,9 @@ class ReservoirClient:
 
         data_string = json.dumps(batch)
         data = "TPL %s" % (data_string,)
-        return self.send(data)
+        result = self.send(data)
+        result_json = json.loads(result)
+        return result_json
 
     def get_or_set(self, key, value, expiry):
         batch = [{
