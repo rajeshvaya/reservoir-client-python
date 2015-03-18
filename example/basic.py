@@ -9,3 +9,10 @@ if __name__ == '__main__':
 	r = ReservoirClient()
 	print r.get("pk_movie")
 
+	print r.set("pk_movie", "awesome", 0)
+
+	print r.set_batch([
+		{ "key":"pk_actor", "data":"aamir khan", "expiry":"0" },
+		{ "key":"pk_director", "data":"raj kumar hirani", "expiry":"0" }
+	])
+

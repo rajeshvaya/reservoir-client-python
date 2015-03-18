@@ -45,11 +45,13 @@ class ReservoirClient:
         batch = [{
             'key': key,
             'data': value,
-            'expiry': expiry
+            'expiry': str(expiry)
         }]
         data_string = json.dumps(batch)
         data = "SET %s" % (data_string,)
-        return self.send(data)
+        result = self.send(data)
+        result_json = json.loads(result)
+        return result_json[0].get("data", None)
 
     def set_batch(self, items):
         batch = []
@@ -57,7 +59,7 @@ class ReservoirClient:
             if not item.get("key", None):
                 continue
             element = {
-                "key": item.key,
+                "key": item.get("key"),
                 "data": item.get("value", None),
                 "expiry": item.get("expiry", None),
             }
@@ -65,7 +67,9 @@ class ReservoirClient:
 
         data_string = json.dumps(batch)
         data = "SET %s" % (data_string,)
-        return self.send(data)
+        result = self.send(data)
+        result_json = json.loads(result)
+        return result_json
 
     def get(self, key):
         batch = [{
@@ -128,7 +132,7 @@ class ReservoirClient:
         # need to imporve the evaluation for ICR on the server side
         batch = [{
             'key': key,
-            'expiry': expiry
+            'expiry': str(expiry)
         }]
         data_string = json.dumps(batch)
         data = "ICR %s" % (data_string,)
@@ -154,7 +158,7 @@ class ReservoirClient:
         # send expiry=0 for already existing key for DCR
         batch = [{
             'key': key,
-            'expiry': expiry
+            'expiry': str(expiry)
         }]
         data_string = json.dumps(batch)
         data = "DCR %s" % (data_string,)
@@ -191,7 +195,7 @@ class ReservoirClient:
         batch = [{
             'key': key,
             'data': value,
-            'expiry': expiry
+            'expiry': str(expiry)
         }]
         data_string = json.dumps(batch)
         data = "OTA %s" % (data_string,)
@@ -205,7 +209,7 @@ class ReservoirClient:
             if not item.get("key", None):
                 continue
             element = {
-                "key": item.key,
+                "key": item.get("key"),
                 "data": item.get("value", None),
                 "expiry": item.get("expiry", None),
             }
@@ -221,7 +225,7 @@ class ReservoirClient:
         batch = [{
             'key': key,
             'data': value,
-            'expiry': expiry
+            'expiry': str(expiry)
         }]
         data_string = json.dumps(batch)
         data = "TPL %s" % (data_string,)
@@ -235,7 +239,7 @@ class ReservoirClient:
             if not item.get("key", None):
                 continue
             element = {
-                "key": item.key,
+                "key": item.get("key"),
                 "data": item.get("value", None),
                 "expiry": item.get("expiry", None),
             }
@@ -251,7 +255,7 @@ class ReservoirClient:
         batch = [{
             'key': key,
             'data': value,
-            'expiry': expiry
+            'expiry': str(expiry)
         }]
         data_string = json.dumps(batch)
         data = "GOS %s" % (data_string,)
