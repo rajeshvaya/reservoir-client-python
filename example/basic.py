@@ -16,3 +16,9 @@ if __name__ == '__main__':
 		{ "key":"pk_director", "data":"raj kumar hirani", "expiry":"0" }
 	])
 
+	print r.icr("pk_movie_votes");
+	print r.get("pk_movie_votes");
+
+	print r.dcr("pk_movie_votes");
+	print r.get("pk_movie_votes");
+

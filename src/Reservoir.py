@@ -111,7 +111,7 @@ class ReservoirClient:
         data = "DEL %s" % (data_string,)
         result = self.send(data)
         result_json = json.loads(result)
-        return result_json[0].get("data", None)
+        return result_json
 
     def delete_batch(self, keys):
         batch = []
@@ -138,7 +138,7 @@ class ReservoirClient:
         data = "ICR %s" % (data_string,)
         result = self.send(data)
         result_json = json.loads(result)
-        return result_json[0].get("data", None)
+        return result_json
 
     def icr_batch(self, keys):
         batch = []
