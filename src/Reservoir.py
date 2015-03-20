@@ -99,6 +99,7 @@ class ReservoirClient:
         batch = [{
             'bucket': bucket
         }]
+        data_string = json.dumps(batch)
         data = "BKT %s" % (data_string,)
         result = self.send(data)
         result_json = json.loads(result)
@@ -108,6 +109,7 @@ class ReservoirClient:
         batch = [{
             'key': key
         }]
+        data_string = json.dumps(batch)
         data = "DEL %s" % (data_string,)
         result = self.send(data)
         result_json = json.loads(result)
@@ -274,8 +276,11 @@ class ReservoirClient:
             self.socket.send(data)
             if expect_return:
                 response = self.socket.recv(1024)
-                response_json = json.loads(response)
-                return response_json.get('data', None)
+                if response:
+                    response_json = json.loads(response)
+                    return response_json.get('data', None)
+                else:
+                    return {}
             else:
                 return True
 
