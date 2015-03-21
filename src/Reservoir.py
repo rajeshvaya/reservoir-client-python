@@ -129,6 +129,38 @@ class ReservoirClient:
         result_json = json.loads(result)
         return result_json
 
+    def set_dependant(self, key, value, expiry, parent_key):
+        batch = [{
+            'key': key,
+            'data': value,
+            'expiry': str(expiry),
+            'parent_key': parent_key
+        }]
+        data_string = json.dumps(batch)
+        data = "DEP %s" % (data_string,)
+        result = self.send(data)
+        result_json = json.loads(result)
+        return result_json[0].get("data", None)
+
+    def set_dependant_batch(self, items):
+        batch = []
+        for item in items:
+            if not item.get("key", None):
+                continue
+            element = {
+                "key": item.get("key"),
+                "data": item.get("value", None),
+                "expiry": item.get("expiry", None),
+                'parent_key': item.get("parent_key")
+            }
+            batch.append(element)
+
+        data_string = json.dumps(batch)
+        data = "DEP %s" % (data_string,)
+        result = self.send(data)
+        result_json = json.loads(result)
+        return result_json
+
     def icr(self, key, expiry=0):
         # send expiry=0 for already existing key for ICR
         # need to imporve the evaluation for ICR on the server side
